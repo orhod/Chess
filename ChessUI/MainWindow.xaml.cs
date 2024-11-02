@@ -28,7 +28,11 @@ namespace ChessUI
             this.gameState = new GameState(Player.White, Board.Initial());
             DrawBoard(gameState.Board);
         }
-        // Initialze the board
+        /*
+         * In : -
+         * Out: -
+         * Do : Initialize the board with images
+         */
         private void InitialzeBoard()
         {
             for (int r = 0; r < 8; r++)
@@ -42,7 +46,11 @@ namespace ChessUI
 
             }
         }
-        // Draw the Board
+        /*
+         * In : Board
+         * Out: -
+         * Do : Draw the board on the screen with the correct images 
+         */
         private void DrawBoard(Board board)
         {
             for(int r = 0;r < 8; r++)

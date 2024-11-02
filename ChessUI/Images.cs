@@ -6,7 +6,7 @@ namespace ChessUI
 {
     public static class Images
     {
-        // Set A HashMap for white pieces images
+        // Dictionary of white piece images
         private static readonly Dictionary<PieceType, ImageSource> whiteSources = new()
         {
             { PieceType.Pawn,LoadImage("Assets/PawnW.png")},
@@ -16,7 +16,7 @@ namespace ChessUI
             { PieceType.Queen,LoadImage("Assets/QueenW.png")},
             { PieceType.King,LoadImage("Assets/KingW.png")}
         };
-        // Set A HashMap for black pieces images
+        // Dictionary of black piece images
         private static readonly Dictionary<PieceType, ImageSource> blackSources = new()
         {
             { PieceType.Pawn,LoadImage("Assets/PawnB.png")},
@@ -26,13 +26,20 @@ namespace ChessUI
             { PieceType.Queen,LoadImage("Assets/QueenB.png")},
             { PieceType.King,LoadImage("Assets/KingB.png")}
         };
-
-        // Load The Images Reletive to the Project
+        /*
+         * In : string (Path to the image)
+         * Out: ImageSource (The image)
+         * Do : Load an image from the path
+         */
         private static ImageSource LoadImage(string filePath)
         {
             return new BitmapImage(new Uri(filePath, UriKind.Relative));
         }
-        // Switch case to know where to find the Piece Image
+        /*
+         * In : Player (Color of the piece), PieceType (Type of the piece)
+         * Out: ImageSource (The image)
+         * Do : Get the correct image for each piece
+         */
         public static ImageSource GetImage(Player color, PieceType type)
         {
             return color switch
@@ -42,7 +49,11 @@ namespace ChessUI
                 _ => null
             };
         }
-        // Get the correct Image for each piece
+        /*
+         * In : Piece
+         * Out: ImageSource (The image)
+         * Do : Get the correct image for a piece
+         */
         public static ImageSource GetImage(Piece piece)
         {
             if (piece == null)

@@ -2,22 +2,26 @@
 {
     public class Board
     {
+        // The board
         private readonly Piece[,] pieces = new Piece[8, 8];
-
-        // Getter and Setter by row and col
+        // Getter and Setter by row and column
         public Piece this[int row, int col]
         {
             get { return pieces[row, col]; }
             set { pieces[row, col] = value; }
         }
 
-        // Getter and Setter by position
+        // Getter and Setter by Position
         public Piece this[Position pos]
         {
             get { return this[pos.Row, pos.Column]; }
             set { this[pos.Row, pos.Column] = value; }
         }
-
+        /*
+         * In: -
+         * Out: Board
+         * Do : Create a new board with the initial pieces
+         */
         public static Board Initial()
         {
             Board board = new Board();
@@ -25,7 +29,11 @@
             return board;
         }
 
-        // Adding all the Pieces needed
+        /*
+         * In : -
+         * Out: -
+         * Do : Add the initial pieces to the board
+         */
         private void AddStartPieces()
         {
             // Adding The black pieces
@@ -55,13 +63,20 @@
                 this[6, i] = new Pawn(Player.Black);
             }
         }
-
-        // Check if a Position in on the board or not
+        /*
+         * In : Position
+         * Out: Boolean
+         * Do : Check if a position is on the board
+         */
         public static bool OnBoard(Position pos)
         {
             return pos.Row >= 0 && pos.Row < 8 && pos.Column >= 0 && pos.Column < 8;
         }
-        // Check if a position is empty
+        /*
+         * In : Position
+         * Out: Boolean
+         * Do : Check if a position has a piece on it
+         */
         public bool IsEmpty(Position pos)
         {
             return this[pos] == null;

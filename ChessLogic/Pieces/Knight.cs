@@ -3,23 +3,36 @@
     // Inheret from Piece
     public class Knight : Piece
     {
+        // Properties
         public override PieceType Type => PieceType.Knight;
         public override Player Color { get; }
 
-        // Knight constractor
+        /*
+         * In : Player (Color of the piece)
+         * Out: -
+         * Do : Constructor to create a Knight
+         */
         public Knight(Player color)
         {
             this.Color = color;
         }
 
-        // Copy Function To generate more pieces
+        /*
+         * In : -
+         * Out: A piece of the same kind
+         * Do :  Copy a knight
+         */
         public override Piece Copy()
         {
             Knight copy = new Knight(Color);
             copy.HasMoved = HasMoved;
             return copy;
         }
-        // Calculate all of the moves for knights
+        /*
+         * In : Position (Where the piece placed), Board (Game board)
+         * Out: enumerator of positions
+         * Do : Check all the potential positions a knight can move to
+         */
         private static IEnumerable<Position> PotentialMoves(Position from)
         {
             foreach(Direction vDir in new Direction[] {Direction.Up, Direction.Down}) 
@@ -31,12 +44,20 @@
                 }
             }
         }
-        // Retrun all the posible moves the knight can do
+        /*
+         * In : Position (Where the piece placed), Board (Game board)
+         * Out: enumerator of positions 
+         * Do : Get all possible moves the knight can do
+         */
         private IEnumerable<Position> PossibleMoves(Position from,Board board) 
         {
             return PotentialMoves(from).Where(pos => Board.OnBoard(pos) && (board.IsEmpty(pos) || board[pos].Color != Color));
         }
-        // Return all the the moves a knight can do
+        /*
+         * In : Position (Where the piece placed), Board (Game board)
+         * Out: enumerator of moves
+         * Do: Get all the moves a knight can do
+         */
         public override IEnumerable<Move> GetMoves(Position from , Board board)
         {
             return PossibleMoves(from,board).Select(to => new NormalMove(from,to));

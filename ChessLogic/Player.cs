@@ -1,15 +1,20 @@
 ﻿namespace ChessLogic
 {
-    // enum of posible kind of player/squer color
+    // Enum for the different players
     public enum Player
     {
         White,
         Black,
         None
     }
+    // Extension methods for the player
     public static class PlayerExtensions
     {
-        // Next player
+        /*
+         * In : Player
+         * Out: Player
+         * Do : Change the turn to the opponent turn
+         */
         public static Player Opponent (this Player player)
         {
             return player switch

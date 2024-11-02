@@ -8,16 +8,25 @@ namespace ChessLogic
 {
     internal class NormalMove : Move
     {
+        // Properties
         public override MoveType Type => MoveType.Normal;
         public override Position FromPos { get; }
         public override Position ToPos { get; }
-        // Constractor
+        /*
+         * In : Position (Where the piece is), Position (Where the piece should be)
+         * Out: -
+         * Do : Constructor to create a normal move
+         */
         public NormalMove(Position fromPos, Position toPos)
         {
             this.FromPos = fromPos;
             this.ToPos = toPos;
         }
-        // Move The piece from one possition to other possiton
+        /*
+         * In : Board (Game board)
+         * Out: -
+         * Do : Execute a move
+         */
         public override void Execite(Board board)
         {
             Piece piece = board[FromPos];

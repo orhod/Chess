@@ -3,9 +3,9 @@
     // Inheret from Piece
     public class King : Piece
     {
+        // Properties
         public override PieceType Type => PieceType.King;
         public override Player Color { get; }
-
         private static readonly Direction[] dirs =
         [
             Direction.Up,
@@ -17,21 +17,31 @@
             Direction.DownLeft,
             Direction.DownRight
         ];
-
-        // Constractor
+        /*
+         * In : Player (Color of the piece)
+         * Out: -
+         * Do : Constructor to create a Knight
+         */
         public King(Player color)
         {
             this.Color = color;
         }
-
-        // Copy Function To generate more pieces
+        /*
+         * In : -
+         * Out: A piece of the same kind
+         * Do :  Copy a king
+         */
         public override Piece Copy()
         {
             King copy = new King(Color);
             copy.HasMoved = HasMoved;
             return copy;
         }
-        // Return All positions a king can move to
+        /*
+         * In : Position (Where the piece placed), Board (Game board)
+         * Out: enumerator of positions
+         * Do : Check all the potential positions a king can move to
+         */
         private IEnumerable<Position> MovePositions(Position from , Board board)
         {
             foreach (Direction dir in dirs)
@@ -47,7 +57,11 @@
                 }
             }
         }
-        // Return the possible moves the king
+        /*
+         * In : Position (Where the piece placed), Board (Game board)
+         * Out: enumerator of moves
+         * Do: Get all the moves a king can do
+         */
         public override IEnumerable<Move> GetMoves(Position from , Board board)
         {
             foreach(Position to in MovePositions(from, board))

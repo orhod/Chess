@@ -1,6 +1,6 @@
 ﻿namespace ChessLogic
 {
-    // Move type in the game
+    // Enum for the different types of moves
     public enum MoveType
     {
         Normal,

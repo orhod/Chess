@@ -1,17 +1,26 @@
 ﻿namespace ChessLogic
 {
-    // Current game state
     public class GameState
     {
+        // Properties
+
         public Board Board {  get; }
         public Player CurrentPlayer { get; private set; }
-
+        /*
+         * In : Player (Current player), Board (Game board)
+         * Out: -
+         * Do : Constructor to create a game state
+         */
         public GameState(Player player, Board board)
         {
             this.CurrentPlayer = player;
             this.Board = board;
         }
-        // Return the leagal moves for a piece in position
+        /*
+         * In : Position (Where the piece is placed)
+         * Out: enumerator of moves
+         * Do : Get all the legal moves for a piece
+         */
         public IEnumerable<Move> LegalMovesForPiece(Position pos)
         {
             if(Board.IsEmpty(pos)|| Board[pos].Color != CurrentPlayer)
@@ -21,7 +30,11 @@
             Piece piece = Board[pos];
             return piece.GetMoves(pos, Board);
         }
-        // Makeing move
+        /*
+         * In : Move (The move to be made)
+         * Out: -
+         * Do : Make a move
+         */
         public void MakeMove(Move move) 
         { 
             move.Execite(Board);

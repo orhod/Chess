@@ -5,18 +5,28 @@ namespace ChessLogic
     // Abstract class for all Pieces
     public abstract class Piece
     {
-        // return the Type of the piece
+        // Properties
         public abstract PieceType Type{get;}
-        // return the color of the piece
         public abstract Player Color { get;}
-        // Check if the piece had moved (for spacial moves)
         public bool HasMoved { get; set;} = false;
-        // Copy Function To generate more pieces
+        /*
+         * In: -
+         * Out: A piece of the same kind
+         * Do: Abstract method To copy a piece
+         */
         public abstract Piece Copy();
-
+        /*
+         * In: Position (Where the piece placed), Board (Game board)
+         * Out: enumerator of moves the piece can do
+         * Do: Abstract method To get all the moves a piece can do
+         */
         public abstract IEnumerable<Move> GetMoves(Position from ,Board board);
 
-        // Return The places the Piece can move to in one direction
+        /*
+         * In: Position (Where the piece placed), Board (Game board) , Direction (Direction to move to)
+         * Out: Places Where the piece can move to in one direction
+         * Do: Check if a posistion in a direction is empty or have an opponent piece
+         */
         protected IEnumerable<Position> MovePositionsInDir(Position from, Board board, Direction dir)
         {
             for (Position pos= from + dir; Board.OnBoard(pos); pos+=dir)
@@ -34,7 +44,11 @@ namespace ChessLogic
                 yield break;
             }
         }
-        // Return The places the Piece can move to in all directions
+        /*
+         * In: Position (Where the piece placed), Board (Game board) , Direction[] (Directions to move to)
+         * Out: Places Where the piece can move to in a collection of directions
+         * Do: Check  for all posistions in a collection of direction is empty or have an opponent piece
+         */
         protected IEnumerable<Position> MovePositionsInDirs(Position from, Board board, Direction[] dirs)
         {
             return dirs.SelectMany(dir=> MovePositionsInDir(from, board, dir));

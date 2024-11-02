@@ -3,12 +3,17 @@
     // Inheret from Piece
     public class Pawn : Piece
     {
+        // Properties
         public override PieceType Type => PieceType.Pawn;
         public override Player Color { get; }
 
         private readonly Direction forward;
 
-        // Constractor
+        /*
+         * In : Player (Color of the piece)
+         * Out: -
+         * Do : Constructor to create a pawn
+         */
         public Pawn (Player color)
         {
             this.Color = color;
@@ -21,19 +26,32 @@
                 this.forward = Direction.Up;
             }
         }
-        // Copy Function To generate more pieces
+        /*
+         * In : -
+         * Out: A piece of the same kind
+         * Do :  Copy a piece
+         */
         public override Piece Copy()
         {
             Pawn copy = new Pawn(Color);
             copy.HasMoved = HasMoved;
             return copy;
         }
-        // Return if the pawn can move
-        private  bool CanMoveTo(Position pos, Board board)
+        /*
+         * In : Position (To move to), Board (Game board)
+         * Out: Boolean 
+         * Do : Check if a position is on the board or empty
+         */
+        private bool CanMoveTo(Position pos, Board board)
         {
             return Board.OnBoard(pos) && board.IsEmpty(pos);
         }
-        private  bool CanCaptureAt(Position pos, Board board)
+        /*
+         * In : Position (To capture at), Board (Game board)
+         * Out: Boolean 
+         * Do : Check if a position is on the board or have an opponent piece
+         */
+        private bool CanCaptureAt(Position pos, Board board)
         {
             if( !Board.OnBoard(pos) || board.IsEmpty(pos)){
                 return false;
@@ -43,7 +61,11 @@
                 return board[pos].Color != Color;
             }
         }
-        // Return The possible forward Moves of the pawn
+        /*
+         * In : Position (Where the pawn placed), Board (Game board)
+         * Out: enumerator of moves (forward)
+         * Do : Get all the moves a pawn can do
+         */
         private IEnumerable<Move> ForwardMoves(Position from, Board board) 
         {
             Position OneStep = from + forward;
@@ -58,7 +80,11 @@
                 }
             }
         }
-        // Return the possible diagonal moves of the pawn
+        /*
+         * In : Position (Where the pawn placed), Board (Game board)
+         * Out: enumerator of moves (Diagonal)
+         * Do: Get all the moves a pawn can do
+         */
         private IEnumerable<Move> DiagonalMoves(Position from, Board board)
         {
             foreach (Direction dir in new Direction[] { Direction.Left, Direction.Right, })
@@ -71,7 +97,11 @@
                 }
             }
         }
-        // Return all the possible moves of the pawn
+        /*
+         * In : Position (Where the pawn placed), Board (Game board)
+         * Out: enumerator of moves
+         * Do : Get all the moves a pawn can do using ForwardMoves and DiagonalMoves methods
+         */
         public override IEnumerable<Move> GetMoves(Position from, Board board)
         {
             return ForwardMoves(from, board).Concat(DiagonalMoves(from, board));
