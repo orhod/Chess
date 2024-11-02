@@ -35,5 +35,6 @@
         {
             return MovePositionsInDirs(from, board, dirs).Select(to => new NormalMove(from, to));
         }
+
     }
 }

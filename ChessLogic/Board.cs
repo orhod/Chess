@@ -29,30 +29,30 @@
         private void AddStartPieces()
         {
             // Adding The black pieces
-            this[0, 0] = new Rook(Player.Black);
-            this[0, 1] = new Knight(Player.Black);
-            this[0, 2] = new Bishop(Player.Black);
-            this[0, 3] = new Queen(Player.Black);
-            this[0, 4] = new King(Player.Black);
-            this[0, 5] = new Bishop(Player.Black);
-            this[0, 6] = new Knight(Player.Black);
-            this[0, 7] = new Rook(Player.Black);
+            this[0, 0] = new Rook(Player.White);
+            this[0, 1] = new Knight(Player.White);
+            this[0, 2] = new Bishop(Player.White);
+            this[0, 3] = new Queen(Player.White);
+            this[0, 4] = new King(Player.White);
+            this[0, 5] = new Bishop(Player.White);
+            this[0, 6] = new Knight(Player.White);
+            this[0, 7] = new Rook(Player.White);
             for (int i = 0; i<8 ; i++)
             {
-                this[1,i] = new Pawn(Player.Black);
+                this[1,i] = new Pawn(Player.White);
             }
             // Adding The white pieces
-            this[7, 0] = new Rook(Player.White);
-            this[7, 1] = new Knight(Player.White);
-            this[7, 2] = new Bishop(Player.White);
-            this[7, 3] = new Queen(Player.White);
-            this[7, 4] = new King(Player.White);
-            this[7, 5] = new Bishop(Player.White);
-            this[7, 6] = new Knight(Player.White);
-            this[7, 7] = new Rook(Player.White);
+            this[7, 0] = new Rook(Player.Black);
+            this[7, 1] = new Knight(Player.Black);
+            this[7, 2] = new Bishop(Player.Black);
+            this[7, 3] = new Queen(Player.Black);
+            this[7, 4] = new King(Player.Black);
+            this[7, 5] = new Bishop(Player.Black);
+            this[7, 6] = new Knight(Player.Black);
+            this[7, 7] = new Rook(Player.Black);
             for (int i = 0; i < 8; i++)
             {
-                this[6, i] = new Pawn(Player.White);
+                this[6, i] = new Pawn(Player.Black);
             }
         }
 
