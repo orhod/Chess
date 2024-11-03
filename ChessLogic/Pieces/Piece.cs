@@ -53,6 +53,19 @@ namespace ChessLogic
         {
             return dirs.SelectMany(dir=> MovePositionsInDir(from, board, dir));
         }
+        /*
+         * In : Position (Where the piece placed), Board (Game board)
+         * Out: A boolean value
+         * Do : Check if the piece can capture the opponent king
+         */
+        public virtual bool CanCaptureOpponentKing(Position from, Board board)
+        {
+            return GetMoves(from, board).Any(move =>
+            {
+                Piece piece = board[move.ToPos];
+                return piece != null && piece.Type == PieceType.King;
+            });
+        }
 
     }
 }

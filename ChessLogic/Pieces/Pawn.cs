@@ -19,11 +19,11 @@
             this.Color = color;
             if (color == Player.White)
             {
-                this.forward = Direction.Down;
+                this.forward = Direction.Up;
             }
             else
             {
-                this.forward = Direction.Up;
+                this.forward = Direction.Down;
             }
         }
         /*
@@ -106,7 +106,19 @@
         {
             return ForwardMoves(from, board).Concat(DiagonalMoves(from, board));
         }
-
+        /*
+           * In : Position , Board
+           * Out: bool
+           * Do : Check if the pawn can captucre an opponent king
+           */
+        public override bool CanCaptureOpponentKing(Position from, Board board)
+        {
+            return DiagonalMoves(from, board).Any(move =>
+            {
+                Piece piece = board[move.ToPos];
+                return piece != null && piece.Type == PieceType.King;
+            });
+        }
 
 
 
