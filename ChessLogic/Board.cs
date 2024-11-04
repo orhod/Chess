@@ -67,6 +67,7 @@ namespace ChessLogic
 
 
 
+
         }
         /*
          * In : Position

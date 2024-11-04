@@ -10,6 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Background="black">
     <Viewbox>
+        <!--Board-->
         <Grid x:Name="BoardGrid"
               Width="600"
               Height="600"
@@ -18,12 +19,14 @@
             <Grid.Background>
                 <ImageBrush ImageSource="Assets/Board.png"/>
             </Grid.Background>
+            <!--Grid for moves of a piece-->
             <UniformGrid x:Name="HighLightGrid"
                             Rows="8"
                             Columns="8">
 
 
             </UniformGrid>
+            <!--Grid for pieces-->
             <UniformGrid x:Name="PieceGrid"
                          Rows="8"
                          Columns="8"
@@ -32,6 +35,7 @@
                 
             </UniformGrid>
 
+            <ContentControl x:Name="EndMenuContainer"/>
 
         </Grid>
     </Viewbox>

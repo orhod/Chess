@@ -86,6 +86,10 @@ namespace ChessUI
          */
         private void BoardGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if(IsEndGameMenuOnScrean())
+            {
+                return;
+            }
             Point point = e.GetPosition(BoardGrid);
             Position pos = ToSquarePosition(point);
             if(selectedPos ==  null)
@@ -162,12 +166,17 @@ namespace ChessUI
          * Out: -
          * Do : Handle the move and update the game state
          *      redraw the board and set the cursor to the player color
+         *      If Game Over Show End screan menu
          */
         private void HandleMove(Move move)
         {
             gameState.MakeMove(move);
             DrawBoard(gameState.Board);
             SetCursor(gameState.CurrentPlayer);
+            if (gameState.IsGameOver())
+            {
+                ShowGameOver();
+            }
         }
 
         /*
@@ -212,6 +221,51 @@ namespace ChessUI
                 Cursor = ChessCursors.BlackCursor;
 
             }
+        }
+        /*
+         * In : -
+         * Out: bool
+         * Do : Ceck if the end game menu is on screan
+         */
+        private bool IsEndGameMenuOnScrean()
+        {
+            return EndMenuContainer.Content != null;
+        }
+        /*
+         * In : -
+         * Out: -
+         * Do : handle the game over screan
+         */
+        private void ShowGameOver()
+        {
+            GameOverMenu gameOverMenu = new GameOverMenu(gameState);
+            EndMenuContainer.Content = gameOverMenu;
+
+            gameOverMenu.OptionSelected += Option =>
+            {
+                if (Option == Option.Restart)
+                {
+                    EndMenuContainer.Content = null;
+                    RestartGame();
+                }
+                else
+                {
+                    Application.Current.Shutdown();
+                }
+            };
+        }
+        /*
+         * In : -
+         * Out: -
+         * Do : Restart the Game
+         */
+        private void RestartGame()
+        {
+            HideHighlight();
+            moveCache.Clear();
+            gameState = new GameState(Player.White, Board.Initial());
+            DrawBoard(gameState.Board);
+            SetCursor(gameState.CurrentPlayer);
         }
     }
 }
