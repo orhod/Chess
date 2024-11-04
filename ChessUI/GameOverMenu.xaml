@@ -11,7 +11,7 @@
             Style="{StaticResource BorderStyle}">
         <!--Game Over menu-->
         <Grid>
-            <!--Devide the screen-->
+            <!--Devide the window-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="0.5*"/>

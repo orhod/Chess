@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace ChessLogic
+﻿namespace ChessLogic
 {
     public class Board
     {
@@ -64,9 +62,6 @@ namespace ChessLogic
             {
                 this[6, i] = new Pawn(Player.White);
             }
-
-
-
 
         }
         /*

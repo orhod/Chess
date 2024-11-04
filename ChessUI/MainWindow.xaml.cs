@@ -1,12 +1,7 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ChessLogic;
 
@@ -158,7 +153,14 @@ namespace ChessUI
 
             if(moveCache.TryGetValue(pos, out Move move))
             {
-                HandleMove(move);
+                if(move.Type == MoveType.PawnPromotion)
+                {
+                    HandlePromotion(move.FromPos, move.ToPos);
+                }
+                else
+                {
+                    HandleMove(move);
+                }
             }
         }
         /*
@@ -177,6 +179,27 @@ namespace ChessUI
             {
                 ShowGameOver();
             }
+        }
+        /*
+         * In : Position from, Position to
+         * Out: -
+         * Do : Handle the pawn promotion
+         *      show the promotion menu and handle the promotion
+         */
+        private void HandlePromotion(Position from, Position to)
+        {
+            pieceImages[to.Row,to.Column].Source = Images.GetImage(gameState.CurrentPlayer, PieceType.Pawn);
+            pieceImages[from.Row, from.Column].Source = null;
+
+            PromotionMenu promMenu = new PromotionMenu(gameState.CurrentPlayer);
+            MenuContainer.Content = promMenu;
+
+            promMenu.PieceSelected += type =>
+            {
+                MenuContainer.Content = null;
+                Move promMove = new PawnPromotion(from, to, type);
+                HandleMove(promMove);
+            };
         }
 
         /*
@@ -229,7 +252,7 @@ namespace ChessUI
          */
         private bool IsEndGameMenuOnScrean()
         {
-            return EndMenuContainer.Content != null;
+            return MenuContainer.Content != null;
         }
         /*
          * In : -
@@ -239,13 +262,13 @@ namespace ChessUI
         private void ShowGameOver()
         {
             GameOverMenu gameOverMenu = new GameOverMenu(gameState);
-            EndMenuContainer.Content = gameOverMenu;
+            MenuContainer.Content = gameOverMenu;
 
             gameOverMenu.OptionSelected += Option =>
             {
                 if (Option == Option.Restart)
                 {
-                    EndMenuContainer.Content = null;
+                    MenuContainer.Content = null;
                     RestartGame();
                 }
                 else

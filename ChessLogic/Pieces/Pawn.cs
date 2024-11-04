@@ -72,7 +72,18 @@
 
             if(CanMoveTo(OneStep, board))
             {
-                yield return new NormalMove(from, OneStep);
+                if(OneStep.Row == 0 || OneStep.Row == 7)
+                {
+                    foreach(Move promMove in PromotionMoves(from, OneStep))
+                    {
+                        yield return promMove;
+                    }
+                }
+                else
+                {
+                    yield return new NormalMove(from, OneStep);
+                }
+
                 Position TwoStep = OneStep + forward;
                 if(!this.HasMoved && CanMoveTo(TwoStep, board))
                 {
@@ -80,10 +91,19 @@
                 }
             }
         }
+        private static IEnumerable<Move> PromotionMoves(Position from ,Position to)
+        {
+            yield return new PawnPromotion(from,to,PieceType.Rook);
+            yield return new PawnPromotion(from, to, PieceType.Bishop);
+            yield return new PawnPromotion(from, to, PieceType.Queen);
+            yield return new PawnPromotion(from, to, PieceType.Knight);
+
+        }
+
         /*
          * In : Position (Where the pawn placed), Board (Game board)
          * Out: enumerator of moves (Diagonal)
-         * Do: Get all the moves a pawn can do
+         * Do : Get all the moves a pawn can do
          */
         private IEnumerable<Move> DiagonalMoves(Position from, Board board)
         {
@@ -93,7 +113,17 @@
 
                 if (CanCaptureAt(to, board))
                 {
-                    yield return new NormalMove(from, to);
+                    if (to.Row == 0 || to.Row == 7)
+                    {
+                        foreach (Move promMove in PromotionMoves(from, to))
+                        {
+                            yield return promMove;
+                        }
+                    }
+                    else
+                    {
+                        yield return new NormalMove(from, to);
+                    }
                 }
             }
         }

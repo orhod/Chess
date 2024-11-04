@@ -34,8 +34,8 @@
                          >
                 
             </UniformGrid>
-
-            <ContentControl x:Name="EndMenuContainer"/>
+            <!--PopUp Menu-->
+            <ContentControl x:Name="MenuContainer"/>
 
         </Grid>
     </Viewbox>
