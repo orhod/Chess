@@ -40,7 +40,6 @@
                     Style="{StaticResource ButtonStyle}"
                     Width="80"
                     Height="30"
-                    Margin="27,9,26,8"
                     Click="Restart_Click"/>
             <!--Exit game button-->
             <Button Grid.Row="2"
@@ -49,7 +48,6 @@
                     Style="{StaticResource ButtonStyle}"
                     Width="80"
                     Height="30" 
-                    Margin="26,9,27,8"
                     Click="Exit_Click"/>
 
         </Grid>

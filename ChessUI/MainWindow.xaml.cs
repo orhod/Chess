@@ -81,7 +81,7 @@ namespace ChessUI
          */
         private void BoardGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(IsEndGameMenuOnScrean())
+            if(IsMenuOnScrean())
             {
                 return;
             }
@@ -250,7 +250,7 @@ namespace ChessUI
          * Out: bool
          * Do : Ceck if the end game menu is on screan
          */
-        private bool IsEndGameMenuOnScrean()
+        private bool IsMenuOnScrean()
         {
             return MenuContainer.Content != null;
         }
@@ -284,11 +284,48 @@ namespace ChessUI
          */
         private void RestartGame()
         {
+            selectedPos = null;
             HideHighlight();
             moveCache.Clear();
             gameState = new GameState(Player.White, Board.Initial());
             DrawBoard(gameState.Board);
             SetCursor(gameState.CurrentPlayer);
+        }
+        /*
+         * In : object sender, KeyEventArgs e
+         * Out: -
+         * Do : Handle the key down event
+         */
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(!IsMenuOnScrean()&& e.Key == Key.Escape)
+            {
+                ShowPauseMenu();
+            }
+        }
+        /*
+         * In : -
+         * Out: -
+         * Do : Show the pause menu and handle the options (Restart, Exit, Continue)
+         */
+        private void ShowPauseMenu()
+        {
+            PauseMenu pauseMenu = new PauseMenu();
+            MenuContainer.Content = pauseMenu;
+
+            pauseMenu.OptionSelected += option =>
+            {
+                MenuContainer.Content = null;
+
+                if (option == Option.Restart)
+                {
+                    RestartGame();
+                }
+                if (option == Option.Exit)
+                {
+                    Application.Current.Shutdown();
+                }
+            };
         }
     }
 }
