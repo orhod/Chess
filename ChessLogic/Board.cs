@@ -162,7 +162,90 @@
         {
             PawnSkipPositions[player] = pos;
         }
-      
+        /*
+         * In : Player , PieceType
+         * Out: Position
+         * Do : find the first position containing a piece type in color
+         */
+        private Position FindPiece(Player color, PieceType type)
+        {
+            return PiecePositionsfor(color).First(pos => this[pos].Type == type);
+        }
+        /*
+         * In : -
+         * Out: Counting
+         * Do : Count the pieces on the board
+         */
+        public Counting CountPieces()
+        {
+            Counting counting = new Counting();
+            foreach (Position pos in PiecePositions())
+            {
+                Piece piece = this[pos];
+                counting.Increment(piece.Color, piece.Type);
+            }
+            return counting;
+        }
+        /*
+         * In : -
+         * Out: bool
+         * Do : Check if there is insufficient material to checkmate
+         */
+        public bool InsufficientMaterial()
+        {
+            Counting counting = CountPieces();
+            return IsKingBishopVSKing(counting) || IsKingBishopVSKingBishop(counting) ||
+                   IsKingKnightVSKing(counting) || IsKingVSKing(counting);
+        }
+        /*
+         * In : Counting
+         * Out: bool
+         * Do : Check if there is a king vs king
+         */
+        private static bool IsKingVSKing(Counting counting)
+        {
+            return counting.TotalCount == 2;
+        }
+        /*
+         * In : Counting
+         * Out: bool
+         * Do : Check if there is a king and a bishop vs king
+         */
+        private static bool IsKingBishopVSKing(Counting counting)
+        {
+            return counting.TotalCount == 3 && (counting.WhitePieces(PieceType.Bishop) == 1 || counting.BlackPieces(PieceType.Bishop) == 1);
+        }
+        /*
+         * In : Counting
+         * Out: bool
+         * Do : Check if there is a king and a knight vs king
+         */
+        private static bool IsKingKnightVSKing(Counting counting)
+        {
+            return counting.TotalCount == 3 && (counting.WhitePieces(PieceType.Knight) == 1 || counting.BlackPieces(PieceType.Knight) == 1);
+        }
+        /*
+         * In : Counting
+         * Out: bool
+         * Do : Check if there is a king and a bishop vs king and a bishop (where the bishops are on the same color)
+         */
+        private bool IsKingBishopVSKingBishop(Counting counting)
+        {
+            if (counting.TotalCount != 4)
+            {
+                return false;
+            }
+            if (counting.WhitePieces(PieceType.Bishop) != 1 || counting.BlackPieces(PieceType.Bishop) != 1)
+            {
+                return false;
+            }
+            Position whiteBishopPos = FindPiece(Player.White, PieceType.Bishop);
+            Position BlackBishopPos = FindPiece(Player.Black, PieceType.Bishop);
+
+            return whiteBishopPos.SquareColor() == BlackBishopPos.SquareColor();
+        }
+
+
 
     }
 }

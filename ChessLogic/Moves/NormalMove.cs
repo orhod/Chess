@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChessLogic
+﻿namespace ChessLogic
 {
     internal class NormalMove : Move
     {
@@ -24,15 +18,18 @@ namespace ChessLogic
         }
         /*
          * In : Board (Game board)
-         * Out: -
-         * Do : Execute a move
+         * Out: bool
+         * Do : Execute a move and return if a capture was made or a pawn moved
          */
-        public override void Execite(Board board)
+        public override bool Execite(Board board)
         {
             Piece piece = board[FromPos];
+            bool campture = !board.IsEmpty(ToPos);
             board[ToPos] = piece;
             board[FromPos] = null;
             piece.HasMoved = true;
+
+            return campture || piece.Type == PieceType.Pawn;
         }
     }
 }

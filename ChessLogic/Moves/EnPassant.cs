@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChessLogic
+﻿namespace ChessLogic
 {
     public class EnPassant : Move
     {
@@ -26,13 +20,14 @@ namespace ChessLogic
         }
         /*
          * In : Board
-         * Out: -
+         * Out: bool (ture) (capture was made)
          * Do : Execute the EnPassant move
          */
-        public override void Execite(Board board)
+        public override bool Execite(Board board)
         {
             board[capturedPos] = null;
             new NormalMove(FromPos, ToPos).Execite(board);
+            return true;
         }   
     }
 }

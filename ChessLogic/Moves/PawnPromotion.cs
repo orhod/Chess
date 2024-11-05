@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChessLogic
+﻿namespace ChessLogic
 {
     // Pawn promotion move
     public class PawnPromotion : Move
@@ -44,17 +38,17 @@ namespace ChessLogic
         }
         /*
          * In : Board
-         * Out: -
+         * Out: bool (true) (pawn was moved)
          * Do : Execute the move replacing the pawn with the new piece
          */
-        public override void Execite(Board board)
+        public override bool Execite(Board board)
         {
             Piece pawn = board[FromPos];
             board[FromPos] = null;
             Piece promotionPiece = CreatePromotionPiece(pawn.Color);
             promotionPiece.HasMoved = true;
             board[ToPos] = promotionPiece;
-
+            return true;
         }
     }
 }

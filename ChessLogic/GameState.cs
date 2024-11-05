@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace ChessLogic
+﻿namespace ChessLogic
 {
     public class GameState
     {
@@ -8,6 +6,8 @@ namespace ChessLogic
         public Board Board {  get; }
         public Result Result { get; private set; } = null;
         public Player CurrentPlayer { get; private set; } 
+
+        private int noCaptureOrPawnMove = 0;
 
         /*
          * In : Player (Current player), Board (Game board)
@@ -37,12 +37,20 @@ namespace ChessLogic
         /*
          * In : Move (The move to be made)
          * Out: -
-         * Do : Make a move
+         * Do : Make a move and update the captured or pawn moved counter
          */
         public void MakeMove(Move move) 
         {
             Board.SetPawnSkipPosition(CurrentPlayer, null);
-            move.Execite(Board);
+            bool captureOrPwanMove = move.Execite(Board);
+            if (captureOrPwanMove)
+            {
+                noCaptureOrPawnMove = 0;
+            }
+            else
+            {
+                noCaptureOrPawnMove++;
+            }
             CurrentPlayer = CurrentPlayer.Opponent();
             CheckForGameover();
             
@@ -79,6 +87,14 @@ namespace ChessLogic
                     Result = Result.Draw(EndReason.Stalemate);
                 }
             }
+            else if (Board.InsufficientMaterial())
+            {
+                Result = Result.Draw(EndReason.InsuffcientMaterial);
+            }
+            else if(FiftyMoveRule())
+            {
+                Result = Result.Draw(EndReason.FiftyMoveRule);
+            }
         }
         /*
          * In : -
@@ -88,6 +104,15 @@ namespace ChessLogic
         public bool IsGameOver()
         {
             return Result != null;
+        }
+        /*
+         * In : -
+         * Out: Bool
+         * Do : Check for the fifty move rule (50 moves for each player => 100 total)
+         */
+        private bool FiftyMoveRule()
+        {
+            return noCaptureOrPawnMove == 100;
         }
     }
 }

@@ -9,10 +9,11 @@
         public abstract Position ToPos { get; }
         /*
          * In : Board (Game board)
-         * Out: -
-         * Do : Abstract method to execute a move
+         * Out: bool
+         * Do : Abstract method to execute a move 
+         *      bool value is used to check if a capture was made or a pawn moved
          */
-        public abstract void Execite(Board board);
+        public abstract bool Execite(Board board);
         /*
          * In : Board
          * Out: bool

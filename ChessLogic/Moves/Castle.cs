@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChessLogic
+﻿namespace ChessLogic
 {
     public class Castle:Move
     {
@@ -45,13 +38,15 @@ namespace ChessLogic
         }
         /*
          * In : Board
-         * Out: -
-         * Do : execute castle move 
+         * Out: bool (false) (no capture is made and no pawn is moved)
+         * Do : execute castle move
+         *      return false because no capture is made and no pawn is moved
          */
-        public override void Execite(Board board)
+        public override bool Execite(Board board)
         {
             new NormalMove(FromPos, ToPos).Execite(board);
             new NormalMove(rookFromPos, rookToPos).Execite(board);
+            return false;
         }
         /*
          *  In : Board
