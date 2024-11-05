@@ -27,6 +27,64 @@
             this.Color = color;
         }
         /*
+         * In : postion , board
+         * Out: bool
+         * Do : Check if There is a rook that can castle
+         */
+        private static bool IsUnMovedRook(Position pos, Board board)
+        {
+            if (board.IsEmpty(pos))
+            {
+                return false;
+            }
+            Piece piece = board[pos];
+            return piece.Type == PieceType.Rook && !piece.HasMoved;
+        }
+        /*
+         * In : IEnumrable of positions , board
+         * Out: bool
+         * Do : Check if all the positions are empty in the way of the castle
+         */
+        private static bool AllEmpty(IEnumerable<Position> positions, Board board)
+        {
+            return positions.All(pos => board.IsEmpty(pos));
+        }
+        /*
+         * In : Position , Board
+         * Out: bool
+         * Do: Check if the king can castle to king side
+         */
+        private bool CanCastleKingSide(Position from , Board board)
+        {
+            if (HasMoved)
+            {
+                return false;
+            }
+            Position rookPos = new Position(from.Row, 7);
+            Position[] betweenPositions = { new Position(from.Row, 5), new Position(from.Row, 6) };
+
+            return IsUnMovedRook(rookPos,board) && AllEmpty(betweenPositions, board);
+
+        }
+        /*
+         * In : Position , Board
+         * Out: bool
+         * Do: Check if the king can castle to queen side
+         */
+        private bool CanCastleQueenSide(Position from, Board board)
+        {
+            if (HasMoved)
+            {
+                return false;
+            }
+            Position rookPos = new Position(from.Row, 0);
+            Position[] betweenPositions = { new Position(from.Row, 1), new Position(from.Row, 2), new Position(from.Row, 3)};
+
+            return IsUnMovedRook(rookPos, board) && AllEmpty(betweenPositions, board);
+
+        }
+
+        /*
          * In : -
          * Out: A piece of the same kind
          * Do :  Copy a king
@@ -68,7 +126,16 @@
             {
                 yield return new NormalMove(from , to);
             }
-            
+            if (CanCastleKingSide(from, board))
+            {
+                yield return new Castle(MoveType.CastleKS, from);
+            }
+            if (CanCastleQueenSide(from, board))
+            {
+                yield return new Castle(MoveType.castleQS, from);
+
+            }
+
         }
         /*
          * In : Position , Board

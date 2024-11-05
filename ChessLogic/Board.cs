@@ -4,6 +4,13 @@
     {
         // The board
         private readonly Piece[,] pieces = new Piece[8, 8];
+
+        private readonly Dictionary<Player, Position> PawnSkipPositions = new Dictionary<Player, Position>
+        {
+            {Player.Black, null },
+            {Player.White, null }
+        };
+
         // Getter and Setter by row and column
         public Piece this[int row, int col]
         {
@@ -136,6 +143,24 @@
                 copy[pos] = this[pos].Copy();
             }
             return copy;
+        }
+        /*
+         * In : Player
+         * Out: Position
+         * Do : get The skiped position of the pawn
+         */
+        public Position GetPawnSkipPosition(Player player)
+        {
+            return PawnSkipPositions[player];
+        }
+        /*
+         * In : Player, Position
+         * Out: -
+         * Do : Save in Dictionary the skiped position 
+         */
+        public void SetPawnSkipPosition(Player player, Position pos)
+        {
+            PawnSkipPositions[player] = pos;
         }
       
 

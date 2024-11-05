@@ -87,19 +87,10 @@
                 Position TwoStep = OneStep + forward;
                 if(!this.HasMoved && CanMoveTo(TwoStep, board))
                 {
-                    yield return new NormalMove(from, TwoStep);
+                    yield return new DoublePawn(from, TwoStep);
                 }
             }
         }
-        private static IEnumerable<Move> PromotionMoves(Position from ,Position to)
-        {
-            yield return new PawnPromotion(from,to,PieceType.Rook);
-            yield return new PawnPromotion(from, to, PieceType.Bishop);
-            yield return new PawnPromotion(from, to, PieceType.Queen);
-            yield return new PawnPromotion(from, to, PieceType.Knight);
-
-        }
-
         /*
          * In : Position (Where the pawn placed), Board (Game board)
          * Out: enumerator of moves (Diagonal)
@@ -111,7 +102,12 @@
             {
                 Position to = from + forward + dir;
 
-                if (CanCaptureAt(to, board))
+                if(to == board.GetPawnSkipPosition(Color.Opponent()))
+                {
+                    yield return new EnPassant(from, to);
+                }
+
+                else if (CanCaptureAt(to, board))
                 {
                     if (to.Row == 0 || to.Row == 7)
                     {
@@ -137,10 +133,10 @@
             return ForwardMoves(from, board).Concat(DiagonalMoves(from, board));
         }
         /*
-           * In : Position , Board
-           * Out: bool
-           * Do : Check if the pawn can captucre an opponent king
-           */
+         * In : Position , Board
+         * Out: bool
+         * Do : Check if the pawn can captucre an opponent king
+         */
         public override bool CanCaptureOpponentKing(Position from, Board board)
         {
             return DiagonalMoves(from, board).Any(move =>
@@ -149,8 +145,19 @@
                 return piece != null && piece.Type == PieceType.King;
             });
         }
+        /*
+         * In : Position from, Position to
+         * Out: enumerator of moves
+         * Do : Promote the pawn to a Rook, Bishop, Queen or Knight
+         */
+        private static IEnumerable<Move> PromotionMoves(Position from, Position to)
+        {
+            yield return new PawnPromotion(from, to, PieceType.Rook);
+            yield return new PawnPromotion(from, to, PieceType.Bishop);
+            yield return new PawnPromotion(from, to, PieceType.Queen);
+            yield return new PawnPromotion(from, to, PieceType.Knight);
 
-
+        }
 
 
     }

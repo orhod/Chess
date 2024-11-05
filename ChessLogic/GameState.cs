@@ -1,4 +1,6 @@
-﻿namespace ChessLogic
+﻿using System.Numerics;
+
+namespace ChessLogic
 {
     public class GameState
     {
@@ -38,10 +40,12 @@
          * Do : Make a move
          */
         public void MakeMove(Move move) 
-        { 
+        {
+            Board.SetPawnSkipPosition(CurrentPlayer, null);
             move.Execite(Board);
             CurrentPlayer = CurrentPlayer.Opponent();
             CheckForGameover();
+            
         }
         /*
          * In : Player
