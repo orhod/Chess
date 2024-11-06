@@ -244,6 +244,100 @@
 
             return whiteBishopPos.SquareColor() == BlackBishopPos.SquareColor();
         }
+        /*
+         * In : Position (of a king), Position (of a rook from the same color)
+         * Out: bool
+         * Do : Check if both the king and a rook didnt move
+         *      Note: Checking to make sure of the type for futre expentions Not a must right now
+         */
+        private bool IsUnmovedKingAndRook(Position kingPos, Position rookPos)
+        {
+            if (IsEmpty(kingPos) || IsEmpty(rookPos))
+            {
+                return false;
+            }
+
+            Piece king = this[kingPos];
+            Piece rook = this[rookPos];
+
+            return !king.HasMoved && !rook.HasMoved && king.Type == PieceType.King && rook.Type == PieceType.Rook;
+
+        }
+        /*
+         * In : Player
+         * Out: bool
+         * Do : Check if thre if the player can castle King side
+         */
+        public bool CastleRightKs(Player player)
+        {
+            return player switch
+            {
+                Player.White => IsUnmovedKingAndRook(new Position(7, 4), new Position(7, 7)),
+                Player.Black => IsUnmovedKingAndRook(new Position(0, 4), new Position(0, 7)),
+                _ => false
+            };
+        }
+        /*
+         * In : Player
+         * Out: bool
+         * Do : Check if thre if the player can castle queen side
+         */
+        public bool CastleRightQs(Player player)
+        {
+            return player switch
+            {
+                Player.White => IsUnmovedKingAndRook(new Position(7, 4), new Position(7, 0)),
+                Player.Black => IsUnmovedKingAndRook(new Position(0, 4), new Position(0, 0)),
+                _ => false
+            };
+        }
+        /*
+         * In : Player , Positions[] (of the pawns), Position (of the pawn skipped)
+         * Out: bool
+         * Do : Check if there is a pawn that can capture en passant
+         */
+        private bool HasPawnInPosition(Player player, Position[] pawnPositions, Position skipPos)
+        {
+            foreach (Position pos in pawnPositions.Where(OnBoard))
+            {
+                Piece piece = this[pos];
+                if (piece == null || piece.Color != player || piece.Type != PieceType.Pawn)
+                {
+                    continue;
+                }
+
+                EnPassant move = new EnPassant(pos, skipPos);
+                if (move.IsLeagal(this))
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
+        /*
+         * In : Player
+         * Out: bool
+         * Do : Check if the player can capture en passant
+         */
+        public bool CanCaptureEnPassant(Player player)
+        {
+            Position skipPos = GetPawnSkipPosition(player.Opponent());
+            if (skipPos == null)
+            {
+                return false;
+            }
+
+            Position[] pawnSkipedPositions = player switch
+            {
+                Player.White => new Position[] { skipPos + Direction.DownLeft, skipPos + Direction.DownRight },
+                Player.Black => new Position[] { skipPos + Direction.UpLeft, skipPos + Direction.UpRight },
+                _ => Array.Empty<Position>()
+            };
+
+            return HasPawnInPosition(player, pawnSkipedPositions, skipPos);
+           
+        }
 
 
 

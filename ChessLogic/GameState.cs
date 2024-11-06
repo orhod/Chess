@@ -8,6 +8,8 @@
         public Player CurrentPlayer { get; private set; } 
 
         private int noCaptureOrPawnMove = 0;
+        private string stateString;
+        private readonly Dictionary<string, int> stateHistory = new Dictionary<string, int>();
 
         /*
          * In : Player (Current player), Board (Game board)
@@ -18,6 +20,10 @@
         {
             this.CurrentPlayer = player;
             this.Board = board;
+
+            stateString = new StateString(Board, CurrentPlayer).ToString();
+            stateHistory[stateString] = 1;
+
         }
         /*
          * In : Position (Where the piece is placed)
@@ -52,6 +58,7 @@
                 noCaptureOrPawnMove++;
             }
             CurrentPlayer = CurrentPlayer.Opponent();
+            UpdateStateString();
             CheckForGameover();
             
         }
@@ -95,6 +102,10 @@
             {
                 Result = Result.Draw(EndReason.FiftyMoveRule);
             }
+            else if (ThreefoldRepetition())
+            {
+                Result = Result.Draw(EndReason.ThreefoldRepatition);
+            }
         }
         /*
          * In : -
@@ -113,6 +124,35 @@
         private bool FiftyMoveRule()
         {
             return noCaptureOrPawnMove == 100;
+        }
+        /*
+         * In : - 
+         * Out: -
+         * Do : Update the state string and add it to the state history dictionary
+         *      If the state string already exists in the dictionary, increment the value
+         */
+        private void UpdateStateString()
+        {
+            stateString = new StateString(Board, CurrentPlayer).ToString();
+
+            if (!stateHistory.ContainsKey(stateString))
+            {
+                stateHistory[stateString] = 1;
+            }
+            else
+            {
+                stateHistory[stateString]++;
+
+            }
+        }
+        /*
+         * In : -
+         * Out: bool
+         * Do : Check for threefold Repetition (same board state happend 3 time)
+         */
+        private bool ThreefoldRepetition()
+        {
+            return stateHistory[stateString] == 3;
         }
     }
 }

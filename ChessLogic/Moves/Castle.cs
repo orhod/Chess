@@ -40,7 +40,7 @@
          * In : Board
          * Out: bool (false) (no capture is made and no pawn is moved)
          * Do : execute castle move
-         *      return false because no capture is made and no pawn is moved
+         *      
          */
         public override bool Execite(Board board)
         {
