@@ -22,7 +22,7 @@
          */
         public Player SquareColor()
         {
-            if((Row + Column) % 2 == 0)
+            if ((Row + Column) % 2 == 0)
             {
                 return Player.White;
             }
@@ -74,7 +74,7 @@
          * Out: Position
          * Do : Add a direction to a position to get a new position
          */
-        public static Position operator +(Position pos,Direction dir)
+        public static Position operator +(Position pos, Direction dir)
         {
             return new Position(pos.Row + dir.RowDel, pos.Column + dir.ColumnDel);
         }

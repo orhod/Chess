@@ -336,7 +336,7 @@
             };
 
             return HasPawnInPosition(player, pawnSkipedPositions, skipPos);
-           
+
         }
 
 

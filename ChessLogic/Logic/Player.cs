@@ -15,7 +15,7 @@
          * Out: Player
          * Do : Change the turn to the opponent turn
          */
-        public static Player Opponent (this Player player)
+        public static Player Opponent(this Player player)
         {
             return player switch
             {

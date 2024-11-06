@@ -13,7 +13,7 @@ namespace ChessUI
     public partial class MainWindow : Window
     {
         // Images for the pieces
-        private readonly Image[,] pieceImages = new Image[8,8];
+        private readonly Image[,] pieceImages = new Image[8, 8];
         // Highlight rectangles
         private readonly Rectangle[,] highlight = new Rectangle[8, 8];
         // The move cache
@@ -43,7 +43,7 @@ namespace ChessUI
         {
             for (int r = 0; r < 8; r++)
             {
-                for(int c = 0; c < 8; c++)
+                for (int c = 0; c < 8; c++)
                 {
                     // Create Images for the pieces and add them to the grid
                     Image image = new Image();
@@ -65,12 +65,12 @@ namespace ChessUI
          */
         private void DrawBoard(Board board)
         {
-            for(int r = 0;r < 8; r++)
-            { 
-                for(int c = 0;c < 8; c++)
+            for (int r = 0; r < 8; r++)
+            {
+                for (int c = 0; c < 8; c++)
                 {
                     Piece piece = board[r, c];
-                    pieceImages[r,c].Source = Images.GetImage(piece);
+                    pieceImages[r, c].Source = Images.GetImage(piece);
                 }
             }
         }
@@ -81,13 +81,13 @@ namespace ChessUI
          */
         private void BoardGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(IsMenuOnScrean())
+            if (IsMenuOnScrean())
             {
                 return;
             }
             Point point = e.GetPosition(BoardGrid);
             Position pos = ToSquarePosition(point);
-            if(selectedPos ==  null)
+            if (selectedPos == null)
             {
                 OnFromPositionSelected(pos);
             }
@@ -105,8 +105,8 @@ namespace ChessUI
         private Position ToSquarePosition(Point point)
         {
             double squareSize = BoardGrid.ActualWidth / 8;
-            int row = (int)(point.Y/squareSize);
-            int col = (int)(point.X/squareSize);
+            int row = (int)(point.Y / squareSize);
+            int col = (int)(point.X / squareSize);
             return new Position(row, col);
 
         }
@@ -151,9 +151,9 @@ namespace ChessUI
             selectedPos = null;
             HideHighlight();
 
-            if(moveCache.TryGetValue(pos, out Move move))
+            if (moveCache.TryGetValue(pos, out Move move))
             {
-                if(move.Type == MoveType.PawnPromotion)
+                if (move.Type == MoveType.PawnPromotion)
                 {
                     HandlePromotion(move.FromPos, move.ToPos);
                 }
@@ -188,7 +188,7 @@ namespace ChessUI
          */
         private void HandlePromotion(Position from, Position to)
         {
-            pieceImages[to.Row,to.Column].Source = Images.GetImage(gameState.CurrentPlayer, PieceType.Pawn);
+            pieceImages[to.Row, to.Column].Source = Images.GetImage(gameState.CurrentPlayer, PieceType.Pawn);
             pieceImages[from.Row, from.Column].Source = null;
 
             PromotionMenu promMenu = new PromotionMenu(gameState.CurrentPlayer);
@@ -210,9 +210,9 @@ namespace ChessUI
         private void ShowHighlight()
         {
             Color color = Color.FromArgb(125, 53, 192, 250);
-            foreach(Position to in this.moveCache.Keys)
+            foreach (Position to in this.moveCache.Keys)
             {
-                highlight[to.Row,to.Column].Fill = new SolidColorBrush(color);
+                highlight[to.Row, to.Column].Fill = new SolidColorBrush(color);
             }
         }
         /*
@@ -235,7 +235,7 @@ namespace ChessUI
          */
         private void SetCursor(Player player)
         {
-            if(player == Player.White)
+            if (player == Player.White)
             {
                 Cursor = ChessCursors.WhiteCursor;
             }
@@ -298,7 +298,7 @@ namespace ChessUI
          */
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if(!IsMenuOnScrean()&& e.Key == Key.Escape)
+            if (!IsMenuOnScrean() && e.Key == Key.Escape)
             {
                 ShowPauseMenu();
             }

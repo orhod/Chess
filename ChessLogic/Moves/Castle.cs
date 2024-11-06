@@ -1,6 +1,6 @@
 ﻿namespace ChessLogic
 {
-    public class Castle:Move
+    public class Castle : Move
     {
         // Properties
         public override MoveType Type { get; }
@@ -16,12 +16,12 @@
          * out: -
          * Do : Constructor
          */
-        public Castle (MoveType type, Position kingPos)
+        public Castle(MoveType type, Position kingPos)
         {
             Type = type;
             FromPos = kingPos;
 
-            if(Type == MoveType.CastleKS)
+            if (Type == MoveType.CastleKS)
             {
                 kingMoveDir = Direction.Left;
                 ToPos = new Position(kingPos.Row, 6);
@@ -64,7 +64,7 @@
             Board copy = board.copy();
             Position kingPosInCopy = FromPos;
 
-            for(int i = 0; i <2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 new NormalMove(kingPosInCopy, kingPosInCopy + kingMoveDir).Execite(copy);
                 kingPosInCopy += kingMoveDir;

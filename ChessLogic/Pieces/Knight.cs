@@ -35,12 +35,12 @@
          */
         private static IEnumerable<Position> PotentialMoves(Position from)
         {
-            foreach(Direction vDir in new Direction[] {Direction.Up, Direction.Down}) 
-            { 
-                foreach(Direction hDire in new Direction[] {Direction.Left, Direction.Right })
+            foreach (Direction vDir in new Direction[] { Direction.Up, Direction.Down })
+            {
+                foreach (Direction hDire in new Direction[] { Direction.Left, Direction.Right })
                 {
                     yield return from + 2 * vDir + hDire;
-                    yield return from + 2 * hDire + vDir;  
+                    yield return from + 2 * hDire + vDir;
                 }
             }
         }
@@ -49,7 +49,7 @@
          * Out: enumerator of positions 
          * Do : Get all possible moves the knight can do
          */
-        private IEnumerable<Position> PossibleMoves(Position from,Board board) 
+        private IEnumerable<Position> PossibleMoves(Position from, Board board)
         {
             return PotentialMoves(from).Where(pos => Board.OnBoard(pos) && (board.IsEmpty(pos) || board[pos].Color != Color));
         }
@@ -58,9 +58,9 @@
          * Out: enumerator of moves
          * Do: Get all the moves a knight can do
          */
-        public override IEnumerable<Move> GetMoves(Position from , Board board)
+        public override IEnumerable<Move> GetMoves(Position from, Board board)
         {
-            return PossibleMoves(from,board).Select(to => new NormalMove(from,to));
+            return PossibleMoves(from, board).Select(to => new NormalMove(from, to));
         }
     }
 }

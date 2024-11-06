@@ -14,7 +14,7 @@
          */
         public Counting()
         {
-            foreach(PieceType type in Enum.GetValues(typeof(PieceType)))
+            foreach (PieceType type in Enum.GetValues(typeof(PieceType)))
             {
                 whiteCount[type] = 0;
                 blackCount[type] = 0;
@@ -27,11 +27,11 @@
          */
         public void Increment(Player color, PieceType type)
         {
-            if(color == Player.White)
+            if (color == Player.White)
             {
                 whiteCount[type]++;
             }
-            else if(color == Player.Black)
+            else if (color == Player.Black)
             {
                 blackCount[type]++;
             }

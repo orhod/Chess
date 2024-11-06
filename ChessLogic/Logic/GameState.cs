@@ -3,9 +3,9 @@
     public class GameState
     {
         // Properties
-        public Board Board {  get; }
+        public Board Board { get; }
         public Result Result { get; private set; } = null;
-        public Player CurrentPlayer { get; private set; } 
+        public Player CurrentPlayer { get; private set; }
 
         private int noCaptureOrPawnMove = 0;
         private string stateString;
@@ -32,7 +32,7 @@
          */
         public IEnumerable<Move> LegalMovesForPiece(Position pos)
         {
-            if(Board.IsEmpty(pos)|| Board[pos].Color != CurrentPlayer)
+            if (Board.IsEmpty(pos) || Board[pos].Color != CurrentPlayer)
             {
                 return Enumerable.Empty<Move>();
             }
@@ -45,7 +45,7 @@
          * Out: -
          * Do : Make a move and update the captured or pawn moved counter
          */
-        public void MakeMove(Move move) 
+        public void MakeMove(Move move)
         {
             Board.SetPawnSkipPosition(CurrentPlayer, null);
             bool captureOrPwanMove = move.Execite(Board);
@@ -60,7 +60,7 @@
             CurrentPlayer = CurrentPlayer.Opponent();
             UpdateStateString();
             CheckForGameover();
-            
+
         }
         /*
          * In : Player
@@ -98,7 +98,7 @@
             {
                 Result = Result.Draw(EndReason.InsuffcientMaterial);
             }
-            else if(FiftyMoveRule())
+            else if (FiftyMoveRule())
             {
                 Result = Result.Draw(EndReason.FiftyMoveRule);
             }

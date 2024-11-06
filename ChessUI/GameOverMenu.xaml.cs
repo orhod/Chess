@@ -38,11 +38,11 @@ namespace ChessUI
          */
         private static string PlayerString(Player player)
         {
-            return player switch 
-            { 
+            return player switch
+            {
                 Player.White => "WHITE",
                 Player.Black => "BLACK",
-                _ => "" 
+                _ => ""
             };
         }
         /*
@@ -54,7 +54,7 @@ namespace ChessUI
         {
             return reason switch
             {
-                EndReason.Stalemate =>$"STALEMATE - {PlayerString(currentPlayer)} CAN'T MOVE",
+                EndReason.Stalemate => $"STALEMATE - {PlayerString(currentPlayer)} CAN'T MOVE",
                 EndReason.Checkmate => $"CHECKMATE - {PlayerString(currentPlayer)} CAN'T MOVE",
                 EndReason.ThreefoldRepatition => "THREEFOLD REPETITION",
                 EndReason.InsuffcientMaterial => "INSUFFICIENT MATERIAL",

@@ -28,6 +28,6 @@
             board[capturedPos] = null;
             new NormalMove(FromPos, ToPos).Execite(board);
             return true;
-        }   
+        }
     }
 }

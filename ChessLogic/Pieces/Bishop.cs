@@ -38,9 +38,9 @@
          * Out: enumerator of moves
          * Do: Get all the moves a bishop can do
          */
-        public override IEnumerable<Move> GetMoves(Position from ,Board board)
+        public override IEnumerable<Move> GetMoves(Position from, Board board)
         {
-            return MovePositionsInDirs(from, board, dirs).Select(to => new NormalMove(from, to));   
+            return MovePositionsInDirs(from, board, dirs).Select(to => new NormalMove(from, to));
         }
 
 

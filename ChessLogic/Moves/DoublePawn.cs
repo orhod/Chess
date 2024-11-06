@@ -1,6 +1,6 @@
 ﻿namespace ChessLogic
 {
-    public class DoublePawn:Move
+    public class DoublePawn : Move
     {
         // Properties
         public override MoveType Type => MoveType.DoublePawn;

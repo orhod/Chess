@@ -54,7 +54,7 @@
          * Out: bool
          * Do: Check if the king can castle to king side
          */
-        private bool CanCastleKingSide(Position from , Board board)
+        private bool CanCastleKingSide(Position from, Board board)
         {
             if (HasMoved)
             {
@@ -63,7 +63,7 @@
             Position rookPos = new Position(from.Row, 7);
             Position[] betweenPositions = { new Position(from.Row, 5), new Position(from.Row, 6) };
 
-            return IsUnMovedRook(rookPos,board) && AllEmpty(betweenPositions, board);
+            return IsUnMovedRook(rookPos, board) && AllEmpty(betweenPositions, board);
 
         }
         /*
@@ -78,7 +78,7 @@
                 return false;
             }
             Position rookPos = new Position(from.Row, 0);
-            Position[] betweenPositions = { new Position(from.Row, 1), new Position(from.Row, 2), new Position(from.Row, 3)};
+            Position[] betweenPositions = { new Position(from.Row, 1), new Position(from.Row, 2), new Position(from.Row, 3) };
 
             return IsUnMovedRook(rookPos, board) && AllEmpty(betweenPositions, board);
 
@@ -100,7 +100,7 @@
          * Out: enumerator of positions
          * Do : Check all the potential positions a king can move to
          */
-        private IEnumerable<Position> MovePositions(Position from , Board board)
+        private IEnumerable<Position> MovePositions(Position from, Board board)
         {
             foreach (Direction dir in dirs)
             {
@@ -109,7 +109,7 @@
                 {
                     continue;
                 }
-                if(board.IsEmpty(to) || board[to].Color != Color)
+                if (board.IsEmpty(to) || board[to].Color != Color)
                 {
                     yield return to;
                 }
@@ -120,11 +120,11 @@
          * Out: enumerator of moves
          * Do: Get all the moves a king can do
          */
-        public override IEnumerable<Move> GetMoves(Position from , Board board)
+        public override IEnumerable<Move> GetMoves(Position from, Board board)
         {
-            foreach(Position to in MovePositions(from, board))
+            foreach (Position to in MovePositions(from, board))
             {
-                yield return new NormalMove(from , to);
+                yield return new NormalMove(from, to);
             }
             if (CanCastleKingSide(from, board))
             {

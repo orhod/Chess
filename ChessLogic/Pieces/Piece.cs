@@ -6,9 +6,9 @@ namespace ChessLogic
     public abstract class Piece
     {
         // Properties
-        public abstract PieceType Type{get;}
-        public abstract Player Color { get;}
-        public bool HasMoved { get; set;} = false;
+        public abstract PieceType Type { get; }
+        public abstract Player Color { get; }
+        public bool HasMoved { get; set; } = false;
         /*
          * In: -
          * Out: A piece of the same kind
@@ -20,7 +20,7 @@ namespace ChessLogic
          * Out: enumerator of moves the piece can do
          * Do: Abstract method To get all the moves a piece can do
          */
-        public abstract IEnumerable<Move> GetMoves(Position from ,Board board);
+        public abstract IEnumerable<Move> GetMoves(Position from, Board board);
 
         /*
          * In: Position (Where the piece placed), Board (Game board) , Direction (Direction to move to)
@@ -29,7 +29,7 @@ namespace ChessLogic
          */
         protected IEnumerable<Position> MovePositionsInDir(Position from, Board board, Direction dir)
         {
-            for (Position pos= from + dir; Board.OnBoard(pos); pos+=dir)
+            for (Position pos = from + dir; Board.OnBoard(pos); pos += dir)
             {
                 if (board.IsEmpty(pos))
                 {
@@ -51,7 +51,7 @@ namespace ChessLogic
          */
         protected IEnumerable<Position> MovePositionsInDirs(Position from, Board board, Direction[] dirs)
         {
-            return dirs.SelectMany(dir=> MovePositionsInDir(from, board, dir));
+            return dirs.SelectMany(dir => MovePositionsInDir(from, board, dir));
         }
         /*
          * In : Position (Where the piece placed), Board (Game board)

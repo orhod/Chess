@@ -14,7 +14,7 @@
          * Out: -
          * Do : Constructor to create a pawn
          */
-        public Pawn (Player color)
+        public Pawn(Player color)
         {
             this.Color = color;
             if (color == Player.White)
@@ -53,7 +53,8 @@
          */
         private bool CanCaptureAt(Position pos, Board board)
         {
-            if( !Board.OnBoard(pos) || board.IsEmpty(pos)){
+            if (!Board.OnBoard(pos) || board.IsEmpty(pos))
+            {
                 return false;
             }
             else
@@ -66,15 +67,15 @@
          * Out: enumerator of moves (forward)
          * Do : Get all the moves a pawn can do
          */
-        private IEnumerable<Move> ForwardMoves(Position from, Board board) 
+        private IEnumerable<Move> ForwardMoves(Position from, Board board)
         {
             Position OneStep = from + forward;
 
-            if(CanMoveTo(OneStep, board))
+            if (CanMoveTo(OneStep, board))
             {
-                if(OneStep.Row == 0 || OneStep.Row == 7)
+                if (OneStep.Row == 0 || OneStep.Row == 7)
                 {
-                    foreach(Move promMove in PromotionMoves(from, OneStep))
+                    foreach (Move promMove in PromotionMoves(from, OneStep))
                     {
                         yield return promMove;
                     }
@@ -85,7 +86,7 @@
                 }
 
                 Position TwoStep = OneStep + forward;
-                if(!this.HasMoved && CanMoveTo(TwoStep, board))
+                if (!this.HasMoved && CanMoveTo(TwoStep, board))
                 {
                     yield return new DoublePawn(from, TwoStep);
                 }
@@ -102,7 +103,7 @@
             {
                 Position to = from + forward + dir;
 
-                if(to == board.GetPawnSkipPosition(Color.Opponent()))
+                if (to == board.GetPawnSkipPosition(Color.Opponent()))
                 {
                     yield return new EnPassant(from, to);
                 }
