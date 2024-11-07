@@ -1,6 +1,6 @@
-﻿using System.Windows.Media;
+﻿using ChessLogic;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using ChessLogic;
 
 namespace ChessUI
 {

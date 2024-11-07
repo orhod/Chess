@@ -1,9 +1,9 @@
-﻿using System.Windows;
+﻿using ChessLogic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using ChessLogic;
 
 namespace ChessUI
 {

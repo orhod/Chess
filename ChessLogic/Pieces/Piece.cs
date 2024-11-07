@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace ChessLogic
+﻿namespace ChessLogic
 {
     // Abstract class for all Pieces
     public abstract class Piece
